@@ -1,5 +1,5 @@
 {
-  "name": "angular-unobtrusive-validation",
+  "name": "tuna-angular-unobtrusive-validation",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://Baxterboom@bitbucket.org/Baxterboom/angular-unobtrusive-validation.git"
+    "url": "https://github.com/Baxterboom/tuna-angular-unobtrusive-validation.git"
   },
   "author": "Thor-Björn Andersson",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/Baxterboom/angular-unobtrusive-validation#readme",
+  "license": "MIT",
+  "homepage": "https://github.com/Baxterboom/",
   "devDependencies": {
     "@types/angular": "^1.6.0",
     "@types/jasmine": "^2.5.47",
