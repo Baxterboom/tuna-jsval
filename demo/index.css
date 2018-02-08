@@ -1,0 +1,25 @@
+form {
+    display: inline-block;
+}
+
+label {
+    width: 111px;
+}
+
+.panel {
+    margin: 10px;
+}
+
+ol {
+    margin: 10px;
+}
+
+.ng-invalid {
+    border: 2px solid red;
+    margin: 2px;
+}
+
+.ng-valid {
+    border: 2px solid green;
+    margin: 2px;
+}

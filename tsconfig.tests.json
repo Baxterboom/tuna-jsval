@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outFile": "tuna-val-tests.js",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "target": "es5",
+    "declaration": false
+  },
+  "include": [
+    "src/**/*-test.ts",
+    "bower_components/**/*.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "demo",
+    "tests",
+    "node_modules",
+    "bower_components"
+  ]
+}
