@@ -5,7 +5,7 @@ MVC C# data annotations for angularjs. Replaces the need for jquery validation f
 Goals:
 - Simple
 - Lightwight
-- Easily expandable
+- Easily extendable
 
 How to install
 --------------
@@ -19,7 +19,7 @@ The plugin has a global variable named Tuna.Validators, it contains two properti
 - Tuna.Validators.texts: containing texts for validators.
 - Tuna.Validators.rules: functions that validates input.
 
-Exising validations:
+Existing validations:
 - regex: 'Invalid value',
 - date: 'Invalid date',
 - email: 'Invalid email',
@@ -50,9 +50,9 @@ Add custom validation
 
 Tuna.Validators.texts["nozero"] = "zeros are not allowed!";
 Tuna.Validators.rules["nozero"] = function (scope, element, attrs) {
-  var regex = new RegExp(/^[1-9]+$/);
+  var regex = new RegExp(/^[0]$/);
   return function (modelValue, viewValue) {
-    return regex.test(viewValue || '');
+    return !regex.test(viewValue || '');
   };
 };
 
