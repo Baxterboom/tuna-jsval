@@ -1,5 +1,6 @@
 var Tuna;
 (function (Tuna) {
+    Tuna.ValidatorAttrName = "val";
     Tuna.ValidatorEvents = {
         onElementError: function (ngModel, element, text) { }
     };
@@ -102,8 +103,8 @@ var Tuna;
 var Tuna;
 (function (Tuna) {
     angular.module('tuna', [])
-        .directive('val', ['$parse', '$compile', function validation($parse, $compile) {
-            var REGEX_VAL_ATTRIBUTE = /^(data-)?val-([^-]+)$/;
+        .directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse, $compile) {
+            var REGEX_VAL_ATTRIBUTE = new RegExp("^(data-)?" + Tuna.ValidatorAttrName + "-([^-]+)$");
             return {
                 restrict: 'A',
                 require: ['^^form', '?ngModel'],

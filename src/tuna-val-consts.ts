@@ -1,4 +1,5 @@
 ﻿module Tuna {
+	export const ValidatorAttrName = "val";
 
 	export const ValidatorEvents: IValidatorEvents = {
 		onElementError: (ngModel, element, text: string) => { }

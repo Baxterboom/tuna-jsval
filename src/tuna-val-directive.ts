@@ -1,7 +1,7 @@
 ﻿module Tuna {
 	angular.module('tuna', [])
-		.directive('val', ['$parse', '$compile', function validation($parse, $compile) {
-			const REGEX_VAL_ATTRIBUTE = /^(data-)?val-([^-]+)$/;
+		.directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse, $compile) {
+			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${Tuna.ValidatorAttrName}-([^-]+)$`);
 
 			return {
 				restrict: 'A',

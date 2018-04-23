@@ -15,6 +15,11 @@ npm install tuna-angular-unobtrusive-validation --save
 
 Usage
 --------------
+It is possible to configure the attribute name to match against (default for jquery-unobtrusive-validation is "val", that is what MVC will generate): 
+```javascript
+Tuna.ValidatorAttrName = "val";
+```
+
 The plugin has a global variable named Tuna.Validators, it contains two properties that can be configured. 
 - Tuna.Validators.texts: containing texts for validators.
 - Tuna.Validators.rules: functions that validates input.
