@@ -19,7 +19,6 @@ It is possible to configure the attribute name to match against (default for jqu
 ```javascript
 Tuna.ValidatorAttrName = "val";
 ```
-
 The plugin has a global variable named Tuna.Validators, it contains two properties that can be configured. 
 - Tuna.Validators.texts: containing texts for validators.
 - Tuna.Validators.rules: functions that validates input.
