@@ -278,7 +278,7 @@ jasmineRequire.HtmlReporter = function(j$) {
             domParent.appendChild(suiteListNode);
           }
           if (resultNode.type == 'spec') {
-            if (domParent.getAttribute('class') != 'jasmine-specs') {
+            if (domParent.getValidatorAttribute('class') != 'jasmine-specs') {
               specListNode = createDom('ul', {className: 'jasmine-specs'});
               domParent.appendChild(specListNode);
             }

@@ -4,6 +4,10 @@ var Tuna;
     Tuna.ValidatorEvents = {
         onElementError: function (ngModel, element, text) { }
     };
+    function getValidatorAttribute(attrs, name) {
+        return attrs[Tuna.ValidatorAttrName + name];
+    }
+    Tuna.getValidatorAttribute = getValidatorAttribute;
     Tuna.Validators = {
         texts: {
             regex: 'Invalid value',
@@ -17,11 +21,11 @@ var Tuna;
         },
         rules: {
             equalto: function (scope, element, attrs) {
-                var other = attrs.valOther;
+                var attr = getValidatorAttribute(attrs, "Other");
                 return function (modelValue, viewValue) {
                     if (!viewValue)
                         return true;
-                    var target = angular.element(other);
+                    var target = angular.element(attr);
                     return target.val() == viewValue;
                 };
             },
@@ -32,7 +36,8 @@ var Tuna;
                 };
             },
             regex: function (scope, element, attrs) {
-                var regex = new RegExp(attrs.valRegexPattern);
+                var attr = getValidatorAttribute(attrs, "RegexPattern");
+                var regex = new RegExp(attr);
                 return function (modelValue, viewValue) {
                     if (!viewValue)
                         return true;
@@ -64,7 +69,8 @@ var Tuna;
                 };
             },
             email: function (scope, element, attrs) {
-                var regex = /.+@.+\..+/;
+                var attr = getValidatorAttribute(attrs, "Email");
+                var regex = attr ? new RegExp(attr) : /.+@.+\..+/;
                 return function (modelValue, viewValue) {
                     if (!viewValue)
                         return true;
@@ -72,8 +78,8 @@ var Tuna;
                 };
             },
             range: function (scope, element, attrs) {
-                var min = attrs.valRangeMin;
-                var max = attrs.valRangeMax;
+                var min = getValidatorAttribute(attrs, "RangeMin");
+                var max = getValidatorAttribute(attrs, "RangeMax");
                 return function (modelValue, viewValue) {
                     if (!viewValue)
                         return true;
@@ -86,8 +92,8 @@ var Tuna;
                 };
             },
             length: function (scope, element, attrs) {
-                var min = attrs.valLengthMin;
-                var max = attrs.valLengthMax;
+                var min = getValidatorAttribute(attrs, "LengthMin");
+                var max = getValidatorAttribute(attrs, "LengthMax");
                 return function (modelValue, viewValue) {
                     if (!viewValue)
                         return true;

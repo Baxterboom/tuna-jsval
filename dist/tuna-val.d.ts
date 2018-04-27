@@ -1,6 +1,7 @@
 declare module Tuna {
     const ValidatorAttrName = "val";
     const ValidatorEvents: IValidatorEvents;
+    function getValidatorAttribute(attrs: any, name: any): any;
     const Validators: IValidator;
 }
 declare module Tuna {
