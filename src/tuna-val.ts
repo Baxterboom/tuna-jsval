@@ -15,6 +15,6 @@ module Tuna {
 	}
 
 	export interface IValidateDelegate {
-		(scope, element, attrs): (modelValue, viewValue) => boolean;
+		(scope: ng.IScope, element: JQLite, attrs: ng.IAttributes): (viewValue: any, modelValue: any) => boolean;
 	}
 }
