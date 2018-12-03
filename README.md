@@ -27,11 +27,12 @@ Existing validations:
 - regex: 'Invalid value',
 - date: 'Invalid date',
 - email: 'Invalid email',
-- range: 'Range must be between {0} and {1}',
+- range: 'Range must be between {min} and {max}',
 - digits: 'Only digits allowed',
 - number: 'Only numbers allowed',
 - required: 'Required field',
-- equalto: '{0} must match {1}'
+- equalto: 'Must match {other}',
+- length: 'Length should be between {min} and {max}'
 
 Change default messages, globally
 ```javascript
@@ -49,10 +50,10 @@ Tuna.Validators.rules["required"] = function (scope, element, attrs) {
   }
 };
 ```
-Add custom validation
+Add custom validation, with message formatting.
 ```javascript
 
-Tuna.Validators.texts["nozero"] = "zeros are not allowed!";
+Tuna.Validators.texts["nozero"] = "zeros are not allowed, {extra}!";
 Tuna.Validators.rules["nozero"] = function (scope, element, attrs) {
   var regex = new RegExp(/^[0]$/);
   return function (modelValue, viewValue) {
@@ -67,8 +68,8 @@ Tuna.ValidatorEvents.onElementError = function (ngModel, element, text) {
 
 ```
 ```html
-<input type="input" placeholder="no zeros" data-val="true" data-val-nozero />
-<input type="input" placeholder="no zeros" data-val="true" data-val-nozero="override nozero text" />
+<input type="input" placeholder="no zeros" data-val="true" data-val-nozero data-val-nozero-extra="some additional text to the message"/>
+<input type="input" placeholder="no zeros" data-val="true" data-val-nozero="overrided nozero text! {zzz}" data-val-nozero-zzz="some additional text to the message"/>
 
 ```
 
