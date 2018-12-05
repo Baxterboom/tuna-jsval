@@ -1,7 +1,7 @@
-﻿module Tuna {
+﻿module Tuna.Validator {
 	angular.module('tuna', [])
-		.directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse, $compile) {
-			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${Tuna.ValidatorAttrName}-([^-]+)$`);
+		.directive(AttrName, ['$parse', '$compile', function validation($parse, $compile) {
+			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${AttrName}-([^-]+)$`);
 
 			return <ng.IDirective>{
 				restrict: 'A',
@@ -9,63 +9,67 @@
 				link: function (scope, element, attrs, controllers: [ng.IFormController, ng.INgModelController]) {
 					// const ngForm = controllers[0];
 					const ngModel = controllers[1];
-					const validator = setupValidators(element);
-					if (!validator) return;
+					const validators = setupValidators(element[0]);
+					if (!validators) return;
 
 					scope.$evalAsync(() => {
 						scope.$watch(() => ngModel.$valid === true, (_isValid) => {
 							const text = resolveErrorText(ngModel.$error);
-							Tuna.ValidatorEvents.onElementError(ngModel, element, text);
+							Events.onElementError(ngModel, element, text);
 						});
 					});
 
 					function resolveErrorText(errors) {
-						let result = 'Undefined error message';
+						let result;
 						for (let name in errors) {
-							result = validator.texts[name];
-							if (errors[name]) break;
+							if (errors[name]) {
+								result = setupText(validators[name]);
+								break;
+							}
 						}
-						return result;
+						return result || `Undefined error message for ${name} validator`;
 					}
 
 					function isEnabled() {
 						return ngModel !== null && $parse(attrs.val)() === true;
 					}
 
-					function setupValidators(element) {
+					function setupValidators(element: HTMLElement) {
 						if (!isEnabled()) return null;
 
-						const result = { texts: {} };
-						const attributes = element[0].attributes;
+						const result: IKeyValue<IValidatorInfo> = {};
+						const attributes = element.attributes;
 
 						for (let prop in attributes) {
-							const current = attributes[prop];
-							const m = REGEX_VAL_ATTRIBUTE.exec(current.name);
-							if (m) {
-								const name = m[m.length - 1].toLowerCase();
-								const text = setupText(current, attributes, Validators.texts[name]);
-								const validator = setupValidator(name);
-								if (!validator) return null;
+							const attr = attributes[prop];
+							const m = REGEX_VAL_ATTRIBUTE.exec(attr.name);
+							if (!m) continue;
 
-								result.texts[name] = text;
-								ngModel.$validators[name] = validator(scope, element, attrs);
-							}
+							const name = m[m.length - 1].toLowerCase();
+							const validator = setupValidator(name);
+							if (validator) result[name] = { attr, name, element, validator };
 						}
 
 						return result;
 					}
 
 					function setupValidator(name: string) {
-						return Validators.rules[name] || console.warn('No rule exists for ' + name);
+						const validator = Validators[name] || console.warn('No rule exists for ' + name);
+						if (validator) ngModel.$validators[name] = validator.rule(scope, element, attrs);
+						return validator;
 					}
 
-					function setupText(target: Attr, attributes: NamedNodeMap, defaultText: string) {
-						const matchRegex = /{(\w+)}/g
-						let text = target.value || defaultText || "";
+					function setupText(validatorInfo: IValidatorInfo) {
+						if (!validatorInfo) return ``;
 
+						const attr = validatorInfo.attr;
+						const attributes = validatorInfo.element.attributes;
+						const matchRegex = /{(\w+)}/g
+
+						let text = attr.value || validatorInfo.validator.text || "";
 						return text.replace(matchRegex, (_all, match) => {
-							var attr = attributes[`${target.name}-${match}`];
-							return attr ? attr.value : match;
+							const a = attributes[`${attr.name}-${match}`];
+							return a ? a.value : match;
 						});
 					}
 				}

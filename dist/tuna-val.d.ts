@@ -1,20 +1,28 @@
 /// <reference types="angular" />
-declare module Tuna {
-    const ValidatorAttrName = "val";
-    const ValidatorEvents: IValidatorEvents;
-    function getValidatorAttr(attrs: ng.IAttributes, name: string): any;
-    const Validators: IValidator;
+declare module Tuna.Validator {
+    const AttrName = "val";
+    const Events: IValidatorEvents;
+    const Validators: IValidators;
 }
-declare module Tuna {
+declare module Tuna.Validator {
 }
 declare var angular: any;
-declare module Tuna {
+declare module Tuna.Validator {
     interface IKeyValue<TValue> {
         [key: string]: TValue;
     }
+    interface IValidators {
+        [name: string]: IValidator;
+    }
+    interface IValidatorInfo {
+        attr: Attr;
+        name: string;
+        element: HTMLElement;
+        validator: IValidator;
+    }
     interface IValidator {
-        texts: IKeyValue<string>;
-        rules: IKeyValue<IValidateDelegate>;
+        text: string;
+        rule: IValidateDelegate;
     }
     interface IValidatorEvents {
         onElementError: (ngModel: any, element: any, text: string) => void;

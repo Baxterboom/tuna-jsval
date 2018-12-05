@@ -1,7 +1,7 @@
 angular.module('index', ['tuna'])
   .controller('index-controller', function () {
 
-    Tuna.ValidatorEvents.onElementError = createTooltip
+    Tuna.Validator.Events.onElementError = createTooltip
 
     this.itemsCount = 1;
     this.items = new Array(this.itemsCount);
@@ -31,8 +31,4 @@ angular.module('index', ['tuna'])
       tooltip.tip().addClass('tooltip-error');
       return tooltip;
     }
-
-
   });
-
-

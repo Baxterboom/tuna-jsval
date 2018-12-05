@@ -1,6 +1,6 @@
 # README #
 
-MVC C# data annotations for angularjs. Replaces the need for jquery validation framework(s). 
+MVC C# data annotations for angularjs. Replaces the need for jquery validation framework(s) and microsoft unobtrusive script(s). 
 
 Goals:
 - Simple
@@ -17,13 +17,24 @@ Usage
 --------------
 It is possible to configure the attribute name to match against (default for jquery-unobtrusive-validation is "val", that is what MVC will generate): 
 ```javascript
-Tuna.ValidatorAttrName = "val";
+Tuna.Validator.AttrName = "val";
 ```
-The plugin has a global variable named Tuna.Validators, it contains two properties that can be configured. 
-- Tuna.Validators.texts: containing texts for validators.
-- Tuna.Validators.rules: functions that validates input.
-
+In Tuna.Validator.Validators you will find all the rules used. It is here you add new or change existing rules:
+```javascript
+Tuna.Validator.Validators = {
+  "required": {
+    text: "Field is required",
+    rule: function (scope, element, attrs) {
+			return function (viewValue, modelValue) {
+				return viewValue != ""; //return true means its valid
+			};
+    }
+  },
+  ...
+};
+```
 Existing validations:
+--------------
 - regex: 'Invalid value',
 - date: 'Invalid date',
 - email: 'Invalid email',
@@ -34,9 +45,11 @@ Existing validations:
 - equalto: 'Must match {other}',
 - length: 'Length should be between {min} and {max}'
 
+Customizations
+--------------
 Change default messages, globally
 ```javascript
-Tuna.Validators.texts["required"] = "override default custom text";
+Tuna.Validator.Validators["required"].text = "override default custom text";
 ```
 Change default messages, inline
 ```html
@@ -44,8 +57,8 @@ Change default messages, inline
 ```
 Change existing validation 
 ```javascript
-Tuna.Validators.rules["required"] = function (scope, element, attrs) { 
-  return function (modelValue, viewValue) { 
+Tuna.Validator.Validators["required"].rule = function (scope, element, attrs) { 
+  return function (viewValue, modelValue) { 
     return viewValue != ""; //true === is valid.
   }
 };
@@ -53,16 +66,18 @@ Tuna.Validators.rules["required"] = function (scope, element, attrs) {
 Add custom validation, with message formatting.
 ```javascript
 
-Tuna.Validators.texts["nozero"] = "zeros are not allowed, {extra}!";
-Tuna.Validators.rules["nozero"] = function (scope, element, attrs) {
-  var regex = new RegExp(/^[0]$/);
-  return function (modelValue, viewValue) {
-    return !regex.test(viewValue || '');
+Tuna.Validator.Validators["nozero"] = {
+  text: "zeros are not allowed, {extra}!",
+  rule: function (scope, element, attrs) {
+    var regex = new RegExp(/^[0]$/);
+    return function (viewValue, modelValue) {
+      return !regex.test(viewValue || '');
+    };
   };
 };
 
 //add error callback
-Tuna.ValidatorEvents.onElementError = function (ngModel, element, text) {
+Tuna.Validator.Events.onElementError = function (ngModel, element, text) {
   alert(text);
  }
 

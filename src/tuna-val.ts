@@ -1,13 +1,24 @@
 ﻿declare var angular: any;
 
-module Tuna {
+module Tuna.Validator {
 	export interface IKeyValue<TValue> {
 		[key: string]: TValue;
 	}
 
+	export interface IValidators {
+		[name: string]: IValidator;
+	}
+
+	export interface IValidatorInfo {
+		attr: Attr;
+		name: string;
+		element: HTMLElement;
+		validator: IValidator;
+	}
+
 	export interface IValidator {
-		texts: IKeyValue<string>;
-		rules: IKeyValue<IValidateDelegate>;
+		text: string;
+		rule: IValidateDelegate;
 	}
 
 	export interface IValidatorEvents {

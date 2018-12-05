@@ -1,78 +1,84 @@
-﻿module Tuna {
-	export const ValidatorAttrName = "val";
+﻿module Tuna.Validator {
+	export const AttrName = "val";
 
-	export const ValidatorEvents: IValidatorEvents = {
+	export const Events: IValidatorEvents = {
 		onElementError: (ngModel: ng.INgModelController, element: JQLite, text: string) => { }
 	}
 
-	export function getValidatorAttr(attrs: ng.IAttributes, name: string) {
-		return attrs[Tuna.ValidatorAttrName + name];
-	}
-
-	export const Validators: IValidator = {
-		texts: {
-			regex: 'Invalid value',
-			date: 'Invalid date',
-			email: 'Invalid email',
-			range: 'Range must be between {min} and {max}',
-			digits: 'Only digits allowed',
-			number: 'Only numbers allowed',
-			required: 'Required field',
-			equalto: 'must match {other}',
-			length: 'Length must be between {min} and {max}',
-		},
-		rules: {
-			equalto: function (scope, element, attrs) {
+	export const Validators: IValidators = {
+		equalto: {
+			text: "Must match {other}",
+			rule: function (scope, element, attrs) {
 				var attr = getValidatorAttr(attrs, "Other");
 				return function (viewValue, modelValue) {
 					if (!viewValue) return true;
 					var target = angular.element(attr);
 					return target.val() == viewValue;
 				}
-			},
-			required: function (scope, element, attrs) {
-				var regex = new RegExp(/^$/);
+			}
+		},
+		required: {
+			text: "Required field",
+			rule: function (scope, element, attrs) {
 				return function (viewValue, modelValue) {
-					return !regex.test(viewValue || '');
+					return !/^$/.test(viewValue || '');
 				}
 			},
-			regex: function (scope, element, attrs) {
+		},
+		regex: {
+			text: "Invalid value",
+			rule: function (scope, element, attrs) {
 				var attr = getValidatorAttr(attrs, "RegexPattern");
 				var regex = new RegExp(attr);
 				return function (viewValue, modelValue) {
 					if (!viewValue) return true;
 					return regex.test(viewValue);
 				}
-			},
-			date: function (scope, element, attrs) {
+			}
+		},
+		date: {
+			text: "Invalid date",
+			rule: function (scope, element, attrs) {
 				return function (viewValue, modelValue) {
 					if (!viewValue) return true;
 					if (viewValue.length < 4) return false;
 					var ticks = Date.parse(viewValue);
 					return isNaN(ticks) === false;
 				}
-			},
-			digits: function (scope, element, attrs) {
+			}
+		},
+		digits: {
+			text: "Only digits allowed",
+			rule: function (scope, element, attrs) {
 				return function (viewValue, modelValue) {
-					if (!viewValue) return true;
-					return viewValue.length == 1 && !isNaN(viewValue);
+					if (viewValue == null) return true;
+					return !/\D+/.test(viewValue);
 				}
-			},
-			number: function (scope, element, attrs) {
+			}
+		},
+		number: {
+			text: "Only numbers allowed",
+			rule: function (scope, element, attrs) {
 				return function (viewValue, modelValue) {
-					if (!viewValue) return true;
-					return viewValue.length > 0 && !isNaN(viewValue);
+					if (viewValue == null) return true;
+					return viewValue.length == 0 || !isNaN(viewValue);
 				}
-			},
-			email: function (scope, element, attrs) {
+			}
+		},
+		email: {
+			text: "Invalid email",
+			rule: function (scope, element, attrs) {
 				var attr = getValidatorAttr(attrs, "Email");
 				var regex = attr ? new RegExp(attr) : /.+@.+\..+/;
 				return function (viewValue, modelValue) {
 					if (!viewValue) return true;
 					return regex.test(viewValue);
 				}
-			},
-			range: function (scope, element, attrs) {
+			}
+		},
+		range: {
+			text: "Range must be between {min} and {max}",
+			rule: function (scope, element, attrs) {
 				var min = getValidatorAttr(attrs, "RangeMin");
 				var max = getValidatorAttr(attrs, "RangeMax");
 				return function (viewValue, modelValue) {
@@ -83,8 +89,11 @@
 					var maxResult = max != null ? value <= max : true;
 					return minResult && maxResult;
 				};
-			},
-			length: function (scope, element, attrs) {
+			}
+		},
+		length: {
+			text: "Length must be between {min} and {max}",
+			rule: function (scope, element, attrs) {
 				var min = getValidatorAttr(attrs, "LengthMin");
 				var max = getValidatorAttr(attrs, "LengthMax");
 				return function (viewValue, modelValue) {
@@ -97,4 +106,8 @@
 			}
 		}
 	};
+
+	function getValidatorAttr(attrs: ng.IAttributes, name: string) {
+		return attrs[AttrName + name];
+	}
 }

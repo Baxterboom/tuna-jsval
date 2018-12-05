@@ -1,5 +1,6 @@
 form {
     display: inline-block;
+    width: 400px;
 }
 
 label {
@@ -10,13 +11,16 @@ label {
     margin: 10px;
 }
 
-ol {
-    margin: 10px;
-}
-
 .ng-invalid {
     border: 2px solid red;
     margin: 2px;
+}
+
+.ng-invalid:before {
+    position: relative;
+    left: -8px;
+    content: '*';
+    color: red;
 }
 
 .ng-valid {
