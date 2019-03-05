@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": "./src",
-    "outFile": "tuna-val.js",
+    "outFile": "tuna-jsval.js",
     "noImplicitAny": false,
     "noEmitOnError": true,
     "removeComments": true,
