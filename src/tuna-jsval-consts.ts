@@ -1,19 +1,20 @@
-﻿module Tuna {
-	export const Ignore = [":hidden"];
-	export const ValidatorAttrName = "val";
-	export const ValidatorEvents: IValidatorEvents = {
-		onElementError: (ngModel, element, text: string) => { }
+﻿module tuna.jsval {
+	export const options = {
+		name: "val",
+		ignore: [":hidden"],
+		onError: (ngModel: ng.INgModelController, element: JQLite, text: string) => { }
 	}
 
-	export function getValidatorAttribute(attrs: ng.IAttributes, name: string) {
-		return attrs[Tuna.ValidatorAttrName + name];
+	export function attr(attrs: ng.IAttributes, name: string, value?: any) {
+		const n = options.name + name;
+		return value ? attrs[n] = value : attrs[n];
 	}
 
 	export function format(text: string, ...args: string[]) {
 		return (text || "").replace(/{(\d+)}/g, (match, number) => args[number] ? args[number] : match);
 	}
 
-	export const Validators: IValidators = {
+	export const validators: IValidators = {
 		texts: {
 			regex: 'Invalid value',
 			date: 'Invalid date',
@@ -26,29 +27,29 @@
 			equalto: '{0} must match {1}'
 		},
 		rules: {
-			equalto: (validator, element, attrs) => {
-				var attr = getValidatorAttribute(attrs, "Other");
+			equalto: (validator) => {
+				var other = attr(validator.attrs, "Other");
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
-					var target = angular.element(attr);
+					var target = angular.element(other);
 					return target.val() == viewValue;
 				}
 			},
-			required: (validator, element, attrs) => {
+			required: (validator) => {
 				var regex = new RegExp(/^$/);
 				return function (modelValue, viewValue) {
 					return !regex.test(viewValue || '');
 				}
 			},
-			regex: (validator, element, attrs) => {
-				var attr = getValidatorAttribute(attrs, "RegexPattern");
-				var regex = new RegExp(attr);
+			regex: (validator) => {
+				var pattern = attr(validator.attrs, "RegexPattern");
+				var regex = new RegExp(pattern);
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
 					return regex.test(viewValue);
 				}
 			},
-			date: (validator, element, attrs) => {
+			date: (validator) => {
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
 					if (viewValue.length < 4) return false;
@@ -56,29 +57,29 @@
 					return isNaN(ticks) === false;
 				}
 			},
-			digits: (validator, element, attrs) => {
+			digits: (validator) => {
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
 					return viewValue.length == 1 && !isNaN(viewValue);
 				}
 			},
-			number: (validator, element, attrs) => {
+			number: (validator) => {
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
 					return viewValue.length > 0 && !isNaN(viewValue);
 				}
 			},
-			email: (validator, element, attrs) => {
-				var attr = getValidatorAttribute(attrs, "Email");
-				var regex = attr ? new RegExp(attr) : /.+@.+\..+/;
+			email: (validator) => {
+				var email = attr(validator.attrs, "Email");
+				var regex = attr ? new RegExp(email) : /.+@.+\..+/;
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
 					return regex.test(viewValue);
 				}
 			},
-			range: (validator, element, attrs) => {
-				var min = getValidatorAttribute(attrs, "RangeMin");
-				var max = getValidatorAttribute(attrs, "RangeMax");
+			range: (validator) => {
+				var min = attr(validator.attrs, "RangeMin");
+				var max = attr(validator.attrs, "RangeMax");
 				validator.text = format(validator.text, min, max);
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;
@@ -89,9 +90,9 @@
 					return minResult && maxResult;
 				};
 			},
-			length: (validator, element, attrs) => {
-				var min = getValidatorAttribute(attrs, "LengthMin");
-				var max = getValidatorAttribute(attrs, "LengthMax");
+			length: (validator) => {
+				var min = attr(validator.attrs, "LengthMin");
+				var max = attr(validator.attrs, "LengthMax");
 				validator.text = format(validator.text, min, max);
 				return function (modelValue, viewValue) {
 					if (!viewValue) return true;

@@ -2,7 +2,7 @@
 /// <reference path="tuna-jsval-consts.ts" />
 /// <reference path="../node_modules/definitely-typed-jasmine/jasmine.d.ts" />
 
-describe(`Tuna.Validators`, function () {
+describe(`tuna.jsval.Validators`, function () {
     var modelValue, viewValue, scope, element, attrs;
 
     describe(`equalto`, function () {
@@ -12,7 +12,7 @@ describe(`Tuna.Validators`, function () {
             attrs = { valOther: `#target-other` };
             element = angular.element(`<input type="text" id="target-other" value="666"></div>`);
             angular.element('body').append(element);
-            isValid = Tuna.Validators.rules[`equalto`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`equalto`](scope, element, attrs);
         })
 
         afterEach(() => {
@@ -47,7 +47,7 @@ describe(`Tuna.Validators`, function () {
         let isValid;
 
         beforeEach(() => {
-            isValid = Tuna.Validators.rules[`required`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`required`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -91,7 +91,7 @@ describe(`Tuna.Validators`, function () {
 
         beforeEach(() => {
             attrs = { valRegexPattern: `^match-this` };
-            isValid = Tuna.Validators.rules[`regex`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`regex`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -116,7 +116,7 @@ describe(`Tuna.Validators`, function () {
         let isValid;
 
         beforeEach(() => {
-            isValid = Tuna.Validators.rules[`date`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`date`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -166,7 +166,7 @@ describe(`Tuna.Validators`, function () {
         let isValid;
 
         beforeEach(() => {
-            isValid = Tuna.Validators.rules[`digits`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`digits`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -197,7 +197,7 @@ describe(`Tuna.Validators`, function () {
         let isValid;
 
         beforeEach(() => {
-            isValid = Tuna.Validators.rules[`number`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`number`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -228,7 +228,7 @@ describe(`Tuna.Validators`, function () {
         let isValid;
 
         beforeEach(() => {
-            isValid = Tuna.Validators.rules[`email`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`email`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -303,7 +303,7 @@ describe(`Tuna.Validators`, function () {
             attrs = {};
             attrs.valRangeMin = 0;
             attrs.valRangeMax = 2;
-            isValid = Tuna.Validators.rules[`range`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`range`](scope, element, attrs);
         })
 
         it(`should exist`, function () {
@@ -384,7 +384,7 @@ describe(`Tuna.Validators`, function () {
             attrs = {};
             attrs.valLengthMin = 0;
             attrs.valLengthMax = 2;
-            isValid = Tuna.Validators.rules[`length`](scope, element, attrs);
+            isValid = tuna.jsval.Validators.rules[`length`](scope, element, attrs);
         })
 
         it(`should exist`, function () {

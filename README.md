@@ -17,17 +17,16 @@ Usage
 --------------
 It is possible to configure the attribute name to match against (default for jquery-unobtrusive-validation is "val", that is what MVC will generate): 
 ```javascript
-Tuna.ValidatorAttrName = "val";
-
+	tuna.jsval.options.name = "val";
 ```
-Elements to ignore when validating is set with the Ignore property
+Elements to ignore when validating
 ```javascript
-Tuna.Ignore = [":hidden"];
+tuna.jsval.options.ignore = [":hidden"];
 ```
 
-The plugin has a global variable named Tuna.Validators, it contains two properties that can be configured. 
-- Tuna.Validators.texts: containing texts for validators.
-- Tuna.Validators.rules: functions that validates input.
+The plugin has a global variable named tuna.jsval.validators, it contains two properties that can be configured. 
+- tuna.jsval.validators.texts: containing texts for validators.
+- tuna.jsval.validators.rules: functions that validates input.
 
 Existing validations:
 - regex: 'Invalid value',
@@ -41,7 +40,7 @@ Existing validations:
 
 Change default messages, globally
 ```javascript
-Tuna.Validators.texts["required"] = "override default custom text";
+tuna.jsval.validators.texts["required"] = "override default custom text";
 ```
 Change default messages, inline
 ```html
@@ -49,7 +48,7 @@ Change default messages, inline
 ```
 Change existing validation 
 ```javascript
-Tuna.Validators.rules["required"] = function (scope, element, attrs) { 
+tuna.jsval.validators.rules["required"] = function (scope, element, attrs) { 
   return function (modelValue, viewValue) { 
     return viewValue != ""; //true === is valid.
   }
@@ -58,8 +57,8 @@ Tuna.Validators.rules["required"] = function (scope, element, attrs) {
 Add custom validation
 ```javascript
 
-Tuna.Validators.texts["nozero"] = "zeros are not allowed!";
-Tuna.Validators.rules["nozero"] = function (scope, element, attrs) {
+tuna.jsval.validators.texts["nozero"] = "zeros are not allowed!";
+tuna.jsval.validators.rules["nozero"] = function (scope, element, attrs) {
   var regex = new RegExp(/^[0]$/);
   return function (modelValue, viewValue) {
     return !regex.test(viewValue || '');
@@ -67,7 +66,7 @@ Tuna.Validators.rules["nozero"] = function (scope, element, attrs) {
 };
 
 //add error callback
-Tuna.ValidatorEvents.onElementError = function (ngModel, element, text) {
+tuna.jsval.options.onError = function (ngModel, element, text) {
   alert(text);
  }
 

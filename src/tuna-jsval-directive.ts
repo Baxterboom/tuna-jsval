@@ -1,7 +1,7 @@
-﻿module Tuna {
+﻿module tuna.jsval {
 	angular.module('tuna.jsval', [])
-		.directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse: ng.IParseService, $compile: ng.ICompileService) {
-			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${Tuna.ValidatorAttrName}-([^-]+)$`);
+		.directive(options.name, ['$parse', '$compile', function validation($parse: ng.IParseService, $compile: ng.ICompileService) {
+			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${options.name}-([^-]+)$`);
 
 			return {
 				restrict: 'A',
@@ -17,7 +17,7 @@
 						scope.$evalAsync(function () {
 							scope.$watch(isElementValid, function (isValid) {
 								var text = getText(ngModel.$error);
-								Tuna.ValidatorEvents.onElementError(ngModel, element, text);
+								options.onError(ngModel, element, text);
 							});
 						});
 					}
@@ -49,23 +49,27 @@
 						for (var prop in attributes) {
 							const item = attributes[prop];
 							const m = REGEX_VAL_ATTRIBUTE.exec(item.name);
-							if (m) {
-								const name = m[m.length - 1].toLowerCase();
-								const target: IValidator = { rule: Validators.rules[name], text: item.value || Validators.texts[name] };
+							if (!m) continue;
+							const name = m[m.length - 1].toLowerCase();
+							const rule = validators.rules[name];
 
-								//@ts-ignore: dont care about void error
-								if (!target.rule) return console.error('No rule exists for ' + name);
+							if (!rule) {
+								console.error('No rule exists for ' + name);
+								continue;
+							}
+							const text = item.value || validators.texts[name];
+							const validator: IValidator = { rule, text, attrs, element };
 
-								const isValid = target.rule(target, element, attrs);
-								result.rules[name] = target.rule;
-								result.texts[name] = target.text;
+							result.rules[name] = validator.rule;
+							result.texts[name] = validator.text;
 
-								ngModel.$validators[name] = (modelValue, viewValue) => {
-									if (Ignore.some(s => element.is(s))) return true;
-									return isValid(modelValue, viewValue);
-								}
+							const isValid = validator.rule(validator);
+							ngModel.$validators[name] = (modelValue, viewValue) => {
+								if (options.ignore.some(s => element.is(s))) return true;
+								return isValid(modelValue, viewValue);
 							}
 						}
+
 						return result;
 					}
 				}

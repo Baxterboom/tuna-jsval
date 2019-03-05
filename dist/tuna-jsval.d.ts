@@ -1,30 +1,31 @@
 /// <reference types="angular" />
-declare module Tuna {
-    const Ignore: string[];
-    const ValidatorAttrName = "val";
-    const ValidatorEvents: IValidatorEvents;
-    function getValidatorAttribute(attrs: ng.IAttributes, name: string): any;
+declare module tuna.jsval {
+    const options: {
+        name: string;
+        ignore: string[];
+        onError: (ngModel: angular.INgModelController, element: JQLite, text: string) => void;
+    };
+    function attr(attrs: ng.IAttributes, name: string, value?: any): any;
     function format(text: string, ...args: string[]): string;
-    const Validators: IValidators;
+    const validators: IValidators;
 }
-declare module Tuna {
+declare module tuna.jsval {
 }
-declare module Tuna {
+declare module tuna.jsval {
     interface IKeyValue<TValue> {
         [key: string]: TValue;
     }
     interface IValidator {
         text: string;
         rule: IValidateDelegate;
+        attrs: ng.IAttributes;
+        element: JQLite;
     }
     interface IValidators {
         texts: IKeyValue<string>;
         rules: IKeyValue<IValidateDelegate>;
     }
-    interface IValidatorEvents {
-        onElementError: (ngModel: any, element: JQLite, text: string) => void;
-    }
     interface IValidateDelegate {
-        (validator: IValidator, element: JQLite, attrs: ng.IAttributes): (modelValue: any, viewValue: any) => boolean;
+        (validator: IValidator): (modelValue: any, viewValue: any) => boolean;
     }
 }

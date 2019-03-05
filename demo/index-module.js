@@ -1,7 +1,7 @@
 angular.module('index', ['tuna.jsval'])
   .controller('index-controller', function () {
 
-    Tuna.ValidatorEvents.onElementError = createTooltip
+    tuna.jsval.options.onError = createTooltip
 
     this.itemsCount = 1;
     this.items = new Array(this.itemsCount);
