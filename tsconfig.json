@@ -11,8 +11,7 @@
     "declaration": true
   },
   "include": [
-    "src/**/*.ts",
-    "bower_components/**/*.d.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "**/*-test.ts",

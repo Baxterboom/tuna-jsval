@@ -1,12 +1,12 @@
+/// <reference types="angular" />
 declare module Tuna {
     const ValidatorAttrName = "val";
     const ValidatorEvents: IValidatorEvents;
-    function getValidatorAttribute(attrs: any, name: any): any;
+    function getValidatorAttribute(attrs: ng.IAttributes, name: string): any;
     const Validators: IValidator;
 }
 declare module Tuna {
 }
-declare var angular: any;
 declare module Tuna {
     interface IKeyValue<TValue> {
         [key: string]: TValue;
@@ -16,9 +16,9 @@ declare module Tuna {
         rules: IKeyValue<IValidateDelegate>;
     }
     interface IValidatorEvents {
-        onElementError: (ngModel: any, element: any, text: string) => void;
+        onElementError: (ngModel: any, element: JQLite, text: string) => void;
     }
     interface IValidateDelegate {
-        (scope: any, element: any, attrs: any): (modelValue, viewValue) => boolean;
+        (scope: ng.IScope, element: JQLite, attrs: ng.IAttributes): (modelValue: any, viewValue: any) => boolean;
     }
 }

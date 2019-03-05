@@ -144,7 +144,7 @@ var Tuna;
                         return result;
                     }
                     function setupValidators(element) {
-                        var enabled = ngModel !== null && $parse(attrs.val)() === true;
+                        var enabled = ngModel !== null && $parse(attrs.val)(scope) === true;
                         if (!enabled)
                             return null;
                         var result = { rules: {}, texts: {} };

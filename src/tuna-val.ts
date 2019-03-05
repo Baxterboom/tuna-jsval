@@ -1,6 +1,4 @@
-﻿declare var angular: any;
-
-module Tuna {
+﻿module Tuna {
 	export interface IKeyValue<TValue> {
 		[key: string]: TValue;
 	}
@@ -11,10 +9,10 @@ module Tuna {
 	}
 
 	export interface IValidatorEvents {
-		onElementError: (ngModel: any, element: any, text: string) => void;
+		onElementError: (ngModel: any, element: JQLite, text: string) => void;
 	}
 
 	export interface IValidateDelegate {
-		(scope, element, attrs): (modelValue, viewValue) => boolean;
+		(scope: ng.IScope, element: JQLite, attrs: ng.IAttributes): (modelValue: any, viewValue: any) => boolean;
 	}
 }

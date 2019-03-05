@@ -5,7 +5,7 @@
 		onElementError: (ngModel, element, text: string) => { }
 	}
 
-	export function getValidatorAttribute(attrs, name) {
+	export function getValidatorAttribute(attrs: ng.IAttributes, name: string) {
 		return attrs[Tuna.ValidatorAttrName + name];
 	}
 
