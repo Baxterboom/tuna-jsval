@@ -1,5 +1,5 @@
-/// <reference path="tuna-val.ts" />
-/// <reference path="tuna-val-consts.ts" />
+/// <reference path="tuna-jsval.ts" />
+/// <reference path="tuna-jsval-consts.ts" />
 /// <reference path="../node_modules/definitely-typed-jasmine/jasmine.d.ts" />
 
 describe(`Tuna.Validators`, function () {
