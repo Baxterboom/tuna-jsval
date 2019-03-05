@@ -1,5 +1,5 @@
 {
-  "name": "tuna-angular-unobtrusive-validation",
+  "name": "tuna-jsval",
   "version": "1.0.3",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Baxterboom/tuna-angular-unobtrusive-validation.git"
+    "url": "https://github.com/Baxterboom/tuna-jsval.git"
   },
   "author": "Thor-Björn Andersson",
   "license": "MIT",
