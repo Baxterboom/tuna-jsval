@@ -1,5 +1,5 @@
 ﻿module Tuna {
-	angular.module('tuna', [])
+	angular.module('tuna.jsval', [])
 		.directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse: ng.IParseService, $compile: ng.ICompileService) {
 			const REGEX_VAL_ATTRIBUTE = new RegExp(`^(data-)?${Tuna.ValidatorAttrName}-([^-]+)$`);
 

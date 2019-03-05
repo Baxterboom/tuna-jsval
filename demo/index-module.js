@@ -1,4 +1,4 @@
-angular.module('index', ['tuna'])
+angular.module('index', ['tuna.jsval'])
   .controller('index-controller', function () {
 
     Tuna.ValidatorEvents.onElementError = createTooltip
@@ -34,5 +34,3 @@ angular.module('index', ['tuna'])
 
 
   });
-
-

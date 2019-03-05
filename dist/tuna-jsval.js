@@ -108,7 +108,7 @@ var Tuna;
 })(Tuna || (Tuna = {}));
 var Tuna;
 (function (Tuna) {
-    angular.module('tuna', [])
+    angular.module('tuna.jsval', [])
         .directive(Tuna.ValidatorAttrName, ['$parse', '$compile', function validation($parse, $compile) {
             var REGEX_VAL_ATTRIBUTE = new RegExp("^(data-)?" + Tuna.ValidatorAttrName + "-([^-]+)$");
             return {
