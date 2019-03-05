@@ -1,4 +1,4 @@
-var name = 'tuna-val';
+var name = 'tuna-jsval';
 
 var path = {
     js: './src/',
