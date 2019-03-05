@@ -35,17 +35,18 @@
                                 <h3 class="panel-title">Form {{::$index + 1}}</h3>
                         </div>
                         <form class="panel-body">
-                                <li><label>required</label> <input id="bbb" name="aaa" type="text" data-val="true" data-val-required="" ng-model="ctrl.model['required-field'+ $index]"></li>
-                                <li><label>regex (\D+)</label> <input id="regex" name="regex" type="text" data-val="true" data-val-regex="regex error" data-val-regex-pattern="\D+" ng-model="ctrl.model['regex-field'+ $index]"></li>
-                                <li><label>date</label> <input id="date" name="date" type="text" data-val="true" data-val-date="date error" ng-model="ctrl.model['date-field'+ $index]"></li>
-                                <li><label>digits</label> <input id="digits" name="digits" type="text" data-val="true" data-val-digits="digits error" ng-model="ctrl.model['digits-field'+ $index]"></li>
-                                <li><label>digits+required</label> <input id="digits" name="digits" type="text" data-val="true" data-val-required="" data-val-digits="digits error" ng-model="ctrl.model['digits+required'+ $index]"></li>
-                                <li><label>number</label> <input id="number" name="number" type="text" data-val="true" data-val-number="number error" ng-model="ctrl.model['number-field'+ $index]"></li>
-                                <li><label>email</label> <input id="email" name="email" type="text" data-val="true" data-val-email="email error" ng-model="ctrl.model['email-field'+ $index]"></li>
-                                <li><label>range</label> <input id="range" name="range" type="text" data-val="true" data-val-range="range error" data-val-range-min="2" data-val-range-max="5" ng-model="ctrl.model['range-field'+ $index]"></li>
-                                <li><label>length min</label> <input id="length.min" name="length.min" type="text" data-val="true" data-val-length="length.min error" data-val-length-min="2" ng-model="ctrl.model['length.min-field'+ $index]"></li>
-                                <li><label>length max</label> <input id="length.max" name="length.max" type="text" data-val="true" data-val-length="length.max error" data-val-length-max="2" ng-model="ctrl.model['length.max-field'+ $index]"></li>
-                                <li><label>length min max</label> <input id="length.min.max" name="length.min.max" type="text" data-val="true" data-val-length="length.min.max error" data-val-length-min="2" data-val-length-max="2" ng-model="ctrl.model['length.min.max-field'+ $index]"></li>
+                                <li><label>required</label> <input id="required" name="required" type="text" data-val="true" data-val-required ng-model="ctrl.model['required-field'+ $index]"></li>
+                                <li><label>required</label> <input id="required-hidden" name="required-hidden" type="text" style="display: none" data-val="true" data-val-required ng-model="ctrl.model['required-field'+ $index]"></li>
+                                <li><label>regex (\D+)</label> <input id="regex" name="regex" type="text" data-val="true" data-val-regex data-val-regex-pattern="\D+" ng-model="ctrl.model['regex-field'+ $index]"></li>
+                                <li><label>date</label> <input id="date" name="date" type="text" data-val="true" data-val-date ng-model="ctrl.model['date-field'+ $index]"></li>
+                                <li><label>digits</label> <input id="digits" name="digits" type="text" data-val="true" data-val-digits ng-model="ctrl.model['digits-field'+ $index]"></li>
+                                <li><label>digits+required</label> <input id="digits" name="digits" type="text" data-val="true" data-val-required data-val-digits="digits error" ng-model="ctrl.model['digits+required'+ $index]"></li>
+                                <li><label>number</label> <input id="number" name="number" type="text" data-val="true" data-val-number ng-model="ctrl.model['number-field'+ $index]"></li>
+                                <li><label>email</label> <input id="email" name="email" type="text" data-val="true" data-val-email ng-model="ctrl.model['email-field'+ $index]"></li>
+                                <li><label>range (2-5)</label> <input id="range" name="range" type="text" data-val="true" data-val-range data-val-range-min="2" data-val-range-max="5" ng-model="ctrl.model['range-field'+ $index]"></li>
+                                <li><label>length min (2)</label> <input id="length.min" name="length.min" type="text" data-val="true" data-val-length data-val-length-min="2" ng-model="ctrl.model['length.min-field'+ $index]"></li>
+                                <li><label>length max (2)</label> <input id="length.max" name="length.max" type="text" data-val="true" data-val-length data-val-length-max="2" ng-model="ctrl.model['length.max-field'+ $index]"></li>
+                                <li><label>length min (2) max (2)</label> <input id="length.min.max" name="length.min.max" type="text" data-val="true" data-val-length data-val-length-min="2" data-val-length-max="2" ng-model="ctrl.model['length.min.max-field'+ $index]"></li>
                         </form>
                 </div>
         </fieldset>

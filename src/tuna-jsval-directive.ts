@@ -39,11 +39,11 @@
 						return result;
 					}
 
-					function setupValidators(element: JQLite): IValidator {
+					function setupValidators(element: JQLite): IValidators {
 						var enabled = ngModel !== null && $parse(attrs.val)(scope) === true;
 						if (!enabled) return null;
 
-						const result: IValidator = { rules: {}, texts: {} };
+						const result: IValidators = { rules: {}, texts: {} };
 						const attributes = element[0].attributes;
 
 						for (var prop in attributes) {
@@ -51,21 +51,21 @@
 							const m = REGEX_VAL_ATTRIBUTE.exec(item.name);
 							if (m) {
 								const name = m[m.length - 1].toLowerCase();
-								const text = item.value || Validators.texts[name];
-								const rule = Validators.rules[name];
+								const target: IValidator = { rule: Validators.rules[name], text: item.value || Validators.texts[name] };
 
-								if (!rule) {
-									console.error('No rule exists for ' + name);
-									return null;
+								//@ts-ignore: dont care about void error
+								if (!target.rule) return console.error('No rule exists for ' + name);
+
+								const isValid = target.rule(target, element, attrs);
+								result.rules[name] = target.rule;
+								result.texts[name] = target.text;
+
+								ngModel.$validators[name] = (modelValue, viewValue) => {
+									if (Ignore.some(s => element.is(s))) return true;
+									return isValid(modelValue, viewValue);
 								}
-
-								result.texts[name] = text;
-								result.rules[name] = rule;
-
-								ngModel.$validators[name] = result.rules[name](scope, element, attrs);
 							}
 						}
-
 						return result;
 					}
 				}

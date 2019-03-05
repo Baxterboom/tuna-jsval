@@ -4,6 +4,11 @@
 	}
 
 	export interface IValidator {
+		text: string;
+		rule: IValidateDelegate;
+	}
+
+	export interface IValidators {
 		texts: IKeyValue<string>;
 		rules: IKeyValue<IValidateDelegate>;
 	}
@@ -13,6 +18,6 @@
 	}
 
 	export interface IValidateDelegate {
-		(scope: ng.IScope, element: JQLite, attrs: ng.IAttributes): (modelValue: any, viewValue: any) => boolean;
+		(validator: IValidator, element: JQLite, attrs: ng.IAttributes): (modelValue: any, viewValue: any) => boolean;
 	}
 }
