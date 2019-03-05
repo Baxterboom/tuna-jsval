@@ -1,7 +1,7 @@
 angular.module('index', ['tuna.jsval'])
   .controller('index-controller', function () {
 
-    tuna.jsval.options.onError = createTooltip
+    tuna.jsval.options.onError = createTooltip;
 
     this.itemsCount = 1;
     this.items = new Array(this.itemsCount);
@@ -10,12 +10,13 @@ angular.module('index', ['tuna.jsval'])
       this.items = new Array(this.itemsCount);
     }
 
-    function createTooltip(ngModel, element, text) {
+    function createTooltip(validator, ngModel) {
+      var element = validator.element;
       var tooltip = element.data('bs.tooltip');
       if (tooltip) tooltip.destroy();
 
       element.tooltip({
-        title: text,
+        title: validator.text,
         trigger: 'hover',
         placement: function () {
           if (!window['bootstrap']) return 'auto right';

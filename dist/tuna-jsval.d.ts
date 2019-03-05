@@ -3,11 +3,11 @@ declare module tuna.jsval {
     const options: {
         name: string;
         ignore: string[];
-        onError: (ngModel: angular.INgModelController, element: JQLite, text: string) => void;
+        onError: (validator: IValidator, ngModel: angular.INgModelController) => void;
     };
     function attr(attrs: ng.IAttributes, name: string, value?: any): any;
     function format(text: string, ...args: string[]): string;
-    const validators: IValidators;
+    const rules: IKeyValue<IRule>;
 }
 declare module tuna.jsval {
 }
@@ -15,17 +15,13 @@ declare module tuna.jsval {
     interface IKeyValue<TValue> {
         [key: string]: TValue;
     }
+    interface IRule {
+        text: string;
+        valid(validator: IValidator): (modelValue: any, viewValue: any) => boolean;
+    }
     interface IValidator {
         text: string;
-        rule: IValidateDelegate;
         attrs: ng.IAttributes;
         element: JQLite;
-    }
-    interface IValidators {
-        texts: IKeyValue<string>;
-        rules: IKeyValue<IValidateDelegate>;
-    }
-    interface IValidateDelegate {
-        (validator: IValidator): (modelValue: any, viewValue: any) => boolean;
     }
 }
