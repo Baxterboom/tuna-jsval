@@ -24,7 +24,7 @@
     "gulp-minify": "^3.1.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "typescript": "^3.3.3333"
   }
 }
